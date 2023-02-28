@@ -1,8 +1,7 @@
 'use strict';
+const products = require('../../mocks/products.json');
 
-module.exports.handler = async () => {
-  const products = await import('../../mocks/products.json', { assert: { type: "json" } });
-
+module.exports.handler = () => {
   return {
     statusCode: 200,
     headers: {

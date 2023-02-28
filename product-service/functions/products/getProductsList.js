@@ -1,13 +1,12 @@
 'use strict';
 const products = require('../../mocks/products.json');
 
-module.exports.handler = () => {
+module.exports.handler = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true
+      'Access-Control-Allow-Origin': '*'
     },
-    body: JSON.stringify(products.default)
+    body: JSON.stringify(products),
   };
 };

@@ -1,9 +1,9 @@
 'use strict';
 const products = require('../../mocks/products.json');
 
-module.exports.handler = (event) => {
+module.exports.handler = async (event) => {
   const id = event.pathParameters.id;
-  const foundItem = products.default.find(product => product.id === id);
+  const foundItem = products.find(product => product.id === id);
 
   if (foundItem) {
     return {

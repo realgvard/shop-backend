@@ -1,0 +1,22 @@
+{
+  "name": "product-service",
+  "version": "1.0.0",
+  "description": "Managing products",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realgvard/shop-backend.git"
+  },
+  "author": "realgvard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/realgvard/shop-backend/issues"
+  },
+  "homepage": "https://github.com/realgvard/shop-backend#readme",
+  "devDependencies": {
+    "vitest": "^0.29.2"
+  }
+}

@@ -59,7 +59,7 @@ provider:
 
 functions:
   getProductsList:
-    handler: functions/getProductsList.handler
+    handler: functions/products/getProductsList.handler
     events:
       - http:
           path: products
@@ -67,7 +67,7 @@ functions:
           cors:
             origin: '*'
   getProductById:
-    handler: functions/getProductById.handler
+    handler: functions/productById/getProductById.handler
     events:
       - http:
           path: product/{id}

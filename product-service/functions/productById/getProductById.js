@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.handler = async (event) => {
-  const products = await import('../mocks/products.json', { assert: { type: "json" } });
+  const products = await import('../../mocks/products.json', { assert: { type: "json" } });
   const id = event.pathParameters.id;
   const foundItem = products.default.find(product => product.id === id);
 

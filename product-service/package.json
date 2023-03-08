@@ -18,5 +18,8 @@
   "homepage": "https://github.com/realgvard/shop-backend#readme",
   "devDependencies": {
     "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1330.0"
   }
 }

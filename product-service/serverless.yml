@@ -27,10 +27,13 @@ provider:
   profile: personal-user
   stage: dev
 
-# you can add statements to the Lambda function's IAM Role here
+  ## you can add statements to the Lambda function's IAM Role here
 #  iam:
 #    role:
 #      statements:
+#        - Effect: "Allow"
+#          Action: "lambda:*"
+#          Resource: "*"
 #        - Effect: "Allow"
 #          Action:
 #            - "s3:ListBucket"
@@ -46,8 +49,9 @@ provider:
 #                - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    PRODUCTS_TABLE: productsTable
+    STOCKS_TABLE: stocksTable
 
 # you can add packaging information here
 #package:
@@ -61,19 +65,21 @@ functions:
   getProductsList:
     handler: functions/products/getProductsList.handler
     events:
-      - http:
-          path: products
+      - httpApi:
+          path: /products
           method: get
-          cors:
-            origin: '*'
   getProductById:
     handler: functions/productById/getProductById.handler
     events:
-      - http:
-          path: product/{id}
+      - httpApi:
+          path: /products/{id}
           method: get
-          cors:
-            origin: '*'
+  createProduct:
+    handler: functions/createProduct/createProduct.handler
+    events:
+      - httpApi:
+          path: /products
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

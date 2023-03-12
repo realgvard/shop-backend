@@ -4,7 +4,8 @@
   "description": "Managing products",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "vitest": "^0.29.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.1330.0"
+    "aws-sdk": "^2.1330.0",
+    "yup": "^1.0.2"
   }
 }

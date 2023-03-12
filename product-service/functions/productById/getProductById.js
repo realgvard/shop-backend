@@ -1,17 +1,28 @@
 'use strict';
-const products = require('../../mocks/products.json');
+const { transactionGetById } = require("../../database/dynamoDB");
+const { joinProductWithStock } = require("../../database/helpers");
 
 module.exports.handler = async (event) => {
-  const id = event.pathParameters.id;
-  const foundItem = products.find(product => product.id === id);
+  console.log('Log: ', event);
 
-  if (foundItem) {
+  const id = event.pathParameters.id;
+  const { data: { product, stock }, isError } = await transactionGetById(id);
+
+  if (isError) {
+    return {
+      statusCode: 500,
+      error: JSON.stringify({
+        error: `Occured an error in the server`
+      })
+    }
+  }
+
+  if (product && stock) {
+    const joinedItem = joinProductWithStock(product, stock);
+
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify(foundItem)
+      body: JSON.stringify(joinedItem)
     };
   }
 

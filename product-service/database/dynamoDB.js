@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-const dynamo = new AWS.DynamoDB.DocumentClient();
+const dynamo = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-1' });
 
 
 async function scanProducts() {

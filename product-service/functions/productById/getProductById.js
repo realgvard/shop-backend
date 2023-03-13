@@ -4,8 +4,6 @@ const { joinProductWithStock } = require("../../database/helpers");
 const {logError, logInfo} = require("../../helpers/logger");
 
 module.exports.handler = async (event) => {
-  console.log('Log: ', event);
-
   const id = event.pathParameters.id;
   const { data: { product, stock }, isError, error } = await transactionGetById(id);
 

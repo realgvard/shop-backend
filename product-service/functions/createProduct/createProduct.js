@@ -13,8 +13,6 @@ let productSchema = object({
 
 
 module.exports.handler = async (event) => {
-  console.log('Log:', event);
-
   const parsedBody = JSON.parse(event.body);
 
   if (!productSchema.isValidSync(parsedBody)) {

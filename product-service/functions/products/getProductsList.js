@@ -1,17 +1,26 @@
 'use strict';
 const { scanProducts, scanStocks } = require("../../database/dynamoDB");
 const { joinProductsWithStocks } = require("../../database/helpers");
+const {logError} = require("../../helpers/logger");
 
 
 module.exports.handler = async (event) => {
-  console.log('Log: ', event);
-
   const products = await scanProducts();
   const stocks = await scanStocks();
 
-  if (products.isError || stocks.isError) {
+  if (products.isError) {
+    logError(products.error, event);
+
     return {
-      statusCode: 200,
+      statusCode: 500,
+    }
+  }
+
+  if (stocks.isError) {
+    logError(products.error, event);
+
+    return {
+      statusCode: 500,
     }
   }
 

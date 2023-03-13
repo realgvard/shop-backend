@@ -2,6 +2,7 @@
 const { transactionPut} = require("../../database/dynamoDB");
 const { object, string, number } = require("yup");
 const { randomUUID } = require('crypto');
+const {logInfo, logError} = require("../../helpers/logger");
 
 let productSchema = object({
   title: string().required(),
@@ -17,6 +18,8 @@ module.exports.handler = async (event) => {
   const parsedBody = JSON.parse(event.body);
 
   if (!productSchema.isValidSync(parsedBody)) {
+    logError({ message: 'Product schema is invalid', statusCode: 400 }, event);
+
     return {
       statusCode: 400,
       body: JSON.stringify({
@@ -40,10 +43,14 @@ module.exports.handler = async (event) => {
   const response = await transactionPut(product, stock);
 
   if (response.isError) {
+    logError(response.error, event);
+
     return {
       statusCode: 500
     };
   }
+
+  logInfo(204, event);
 
   return {
     statusCode: 204,

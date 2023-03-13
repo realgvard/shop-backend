@@ -9,7 +9,7 @@ async function scanProducts() {
   }).promise().catch(error => {
     return {
       isError: true,
-      errorMessage: error.message
+      error
     }
   });
 
@@ -28,7 +28,7 @@ async function scanStocks() {
   }).promise().catch(error => {
     return {
       isError: true,
-      errorMessage: error.message
+      error
     }
   });
 
@@ -62,7 +62,7 @@ async function transactionGetById(id) {
     ]}).promise().catch(error => {
       return {
         isError: true,
-        errorMessage: error.message
+        error
       }
   });
 
@@ -95,7 +95,7 @@ async function transactionPut(product, stock) {
     ]}).promise().catch(error => {
     return {
       isError: true,
-      errorMessage: error.message
+      error
     }
   });
 
@@ -103,7 +103,9 @@ async function transactionPut(product, stock) {
     return response;
   }
 
-  return response;
+  return {
+    isSuccess: true
+  };
 }
 
 module.exports = {

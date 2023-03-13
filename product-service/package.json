@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "populate-mock-products": "PRODUCTS_TABLE=productsTable STOCKS_TABLE=stocksTable node ./scripts/populateMockProducts.js"
   },
   "repository": {
     "type": "git",

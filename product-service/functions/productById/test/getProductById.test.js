@@ -1,4 +1,4 @@
-import { assert, test, describe } from 'vitest';
+import { assert, test, describe, vi } from 'vitest';
 import { handler as getProductById } from '../getProductById';
 
 describe('getProductById', () => {
@@ -13,9 +13,6 @@ describe('getProductById', () => {
     };
     const expectedResponse = {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
       body: JSON.stringify(expectedFoundItem)
     };
 

@@ -7,9 +7,6 @@ describe('getProductsList', () => {
     const response = await getProductsList();
     const expectedResponse = {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
       body: JSON.stringify(products)
     };
 

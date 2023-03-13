@@ -4,7 +4,9 @@
   "description": "Managing products",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "populate-mock-products": "PRODUCTS_TABLE=productsTable STOCKS_TABLE=stocksTable node ./scripts/populateMockProducts.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,9 @@
   "homepage": "https://github.com/realgvard/shop-backend#readme",
   "devDependencies": {
     "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1330.0",
+    "yup": "^1.0.2"
   }
 }

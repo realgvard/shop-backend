@@ -26,11 +26,29 @@ provider:
   region: eu-west-1
   profile: personal-user
   stage: dev
+  httpApi:
+    cors: true
+  iam:
+    role:
+      statements: # permissions for all of your functions can be set here
+        - Effect: Allow
+          Action: # Gives permission to DynamoDB tables in a specific region
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: 'arn:aws:dynamodb:eu-west-1:*:*'
 
-# you can add statements to the Lambda function's IAM Role here
+  ## you can add statements to the Lambda function's IAM Role here
 #  iam:
 #    role:
 #      statements:
+#        - Effect: "Allow"
+#          Action: "lambda:*"
+#          Resource: "*"
 #        - Effect: "Allow"
 #          Action:
 #            - "s3:ListBucket"
@@ -46,8 +64,9 @@ provider:
 #                - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    PRODUCTS_TABLE: productsTable
+    STOCKS_TABLE: stocksTable
 
 # you can add packaging information here
 #package:
@@ -61,19 +80,21 @@ functions:
   getProductsList:
     handler: functions/products/getProductsList.handler
     events:
-      - http:
-          path: products
+      - httpApi:
+          path: /products
           method: get
-          cors:
-            origin: '*'
   getProductById:
     handler: functions/productById/getProductById.handler
     events:
-      - http:
-          path: product/{id}
+      - httpApi:
+          path: /products/{id}
           method: get
-          cors:
-            origin: '*'
+  createProduct:
+    handler: functions/createProduct/createProduct.handler
+    events:
+      - httpApi:
+          path: /products
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -113,6 +134,47 @@ functions:
 #    Define function environment variables here
 #    environment:
 #      variable2: value2
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    productsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: productsTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+#          - AttributeName: title
+#            AttributeType: S
+#          - AttributeName: description
+#            AttributeType: S
+#          - AttributeName: price
+#            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+#          - AttributeName: title
+#            KeyType: RANGE
+#          - AttributeName: description
+#            KeyType: RANGE
+#          - AttributeName: price
+#            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    stocksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: stocksTable
+        AttributeDefinitions:
+          - AttributeName: product_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: product_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
 # you can add CloudFormation resource templates here
 #resources:
